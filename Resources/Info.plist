@@ -3,11 +3,11 @@
 <plist version="1.0">
 <dict>
     <key>CFBundleName</key>
-    <string>Pausa 20-20-20</string>
+    <string>Pisca Pisca</string>
     <key>CFBundleDisplayName</key>
-    <string>Pausa 20-20-20</string>
+    <string>Pisca Pisca</string>
     <key>CFBundleExecutable</key>
-    <string>Pausa2020</string>
+    <string>PiscaPisca</string>
     <key>CFBundleIdentifier</key>
     <string>local.pausa2020</string>
     <key>CFBundlePackageType</key>
@@ -27,6 +27,6 @@
     <key>NSHighResolutionCapable</key>
     <true/>
     <key>NSHumanReadableCopyright</key>
-    <string>Pausa 20-20-20</string>
+    <string>Pisca Pisca</string>
 </dict>
 </plist>

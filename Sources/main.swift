@@ -45,6 +45,10 @@ enum Pref {
         get { d.bool(forKey: "didSetup") }
         set { d.set(newValue, forKey: "didSetup") }
     }
+    static var didRename: Bool {
+        get { d.bool(forKey: "didRename") }
+        set { d.set(newValue, forKey: "didRename") }
+    }
 }
 
 // MARK: - Vista da pausa (clique para saltar)
@@ -90,6 +94,15 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
             applyLoginItem(true)
         }
 
+        // Uma vez, após a mudança de nome: re-regista o arranque automático no novo caminho.
+        if !Pref.didRename {
+            Pref.didRename = true
+            if Pref.launchAtLogin {
+                applyLoginItem(false)
+                applyLoginItem(true)
+            }
+        }
+
         remaining = TimeInterval(Pref.workMinutes * 60)
         lastTick = Date()
 
@@ -112,13 +125,13 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
 
     private func configureStatusItem() {
         guard let button = statusItem.button else { return }
-        let img = NSImage(systemSymbolName: "eye", accessibilityDescription: "Pausa 20-20-20")
+        let img = NSImage(systemSymbolName: "eye", accessibilityDescription: "Pisca Pisca")
         img?.isTemplate = true
         button.image = img
         button.imagePosition = .imageLeading
         button.imageScaling = .scaleProportionallyDown
         button.font = NSFont.monospacedDigitSystemFont(ofSize: 12, weight: .regular)
-        button.toolTip = "Pausa 20-20-20"
+        button.toolTip = "Pisca Pisca"
     }
 
     // MARK: Relógio
@@ -197,7 +210,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         }
 
         if button.image?.name() != symbol {
-            let img = NSImage(systemSymbolName: symbol, accessibilityDescription: "Pausa 20-20-20")
+            let img = NSImage(systemSymbolName: symbol, accessibilityDescription: "Pisca Pisca")
             img?.isTemplate = true
             button.image = img
         }
@@ -209,8 +222,8 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         button.toolTip = phase == .rest && !paused
             ? Lang.t("A descansar os olhos — \(Int(ceil(remaining))) s",
                      "Resting your eyes — \(Int(ceil(remaining))) s")
-            : Lang.t("Pausa 20-20-20 — próxima pausa às \(f.string(from: next))",
-                     "20-20-20 break — next break at \(f.string(from: next))")
+            : Lang.t("Pisca Pisca — próxima pausa às \(f.string(from: next))",
+                     "Pisca Pisca — next break at \(f.string(from: next))")
     }
 
     // MARK: Menu
@@ -286,7 +299,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         menu.addItem(langItem)
 
         menu.addItem(.separator())
-        menu.addItem(item(Lang.t("Acerca da Pausa 20-20-20", "About Pausa 20-20-20"), #selector(about)))
+        menu.addItem(item(Lang.t("Acerca do Pisca Pisca", "About Pisca Pisca"), #selector(about)))
         menu.addItem(item(Lang.t("Sair", "Quit"), #selector(quit)))
 
         updateStatusItem()
@@ -389,7 +402,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
                 if SMAppService.mainApp.status == .enabled { try SMAppService.mainApp.unregister() }
             }
         } catch {
-            NSLog("Pausa20: erro no item de início de sessão: \(error)")
+            NSLog("PiscaPisca: erro no item de início de sessão: \(error)")
         }
     }
 
@@ -526,7 +539,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     @objc func about() {
         activateApp()
         let a = NSAlert()
-        a.messageText = "Pausa 20-20-20"
+        a.messageText = "Pisca Pisca"
         a.informativeText = Lang.t("""
         Regra 20-20-20: a cada 20 minutos de ecrã, olhe durante 20 segundos para algo a cerca de 6 metros (20 pés).
 

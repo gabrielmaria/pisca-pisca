@@ -1,10 +1,10 @@
-# Pausa 20-20-20
+# Pisca Pisca
 
-<img src="docs/icon.png" width="140" align="right" alt="Ícone da app">
+<img src="docs/icon.png" width="140" align="right" alt="Ícone do Pisca Pisca">
 
-App de barra de menus para macOS que aplica a regra **20-20-20**: a cada 20 minutos de ecrã, olhar durante 20 segundos para algo a cerca de 6 metros (20 pés).
+App de barra de menus para macOS que aplica a regra **20-20-20**: a cada 20 minutos de ecrã, olhar durante 20 segundos para algo a cerca de 6 metros (20 pés). O nome é o que fazes com os olhos enquanto descansas a vista.
 
-- Nativa em Swift + AppKit — **~0,6 MB** de disco e **~15 MB** de memória (nada de Electron)
+- Nativa em Swift + AppKit — **~0,7 MB** de disco e **~15 MB** de memória (nada de Electron)
 - Vive apenas na barra de menus, sem ícone no Dock
 - Contagem decrescente no ícone e ecrã de pausa a preencher o monitor (ou cartão discreto no canto)
 - Pausa em ecrã inteiro ou modo discreto, tempos configuráveis (10–60 min / 20–60 s)
@@ -17,12 +17,12 @@ App de barra de menus para macOS que aplica a regra **20-20-20**: a cada 20 minu
 Requer macOS 13 ou superior e as Xcode Command Line Tools (`xcode-select --install`).
 
 ```bash
-git clone https://github.com/gabrielmaria/pausa-20-20-20.git
-cd pausa-20-20-20
+git clone https://github.com/gabrielmaria/pisca-pisca.git
+cd pisca-pisca
 ./build.sh --install
 ```
 
-A app fica em `/Applications/Pausa 20-20-20.app` e arranca de imediato.
+A app fica em `/Applications/Pisca Pisca.app` e arranca de imediato.
 
 ## Utilizar
 
@@ -46,7 +46,7 @@ Durante uma pausa, clique em qualquer lugar para a terminar mais cedo.
 
 A macOS menu bar app that enforces the **20-20-20 rule**: every 20 minutes of screen time, look at something about 6 metres (20 feet) away for 20 seconds.
 
-- Native Swift + AppKit — **~0.6 MB** on disk and **~15 MB** of RAM (no Electron)
+- Native Swift + AppKit — **~0.7 MB** on disk and **~15 MB** of RAM (no Electron)
 - Menu bar only, no Dock icon
 - Countdown in the menu bar and a full-screen break, or a discreet corner card
 - Configurable timings (10–60 min / 20–60 s)
@@ -59,12 +59,12 @@ A macOS menu bar app that enforces the **20-20-20 rule**: every 20 minutes of sc
 Requires macOS 13+ and the Xcode Command Line Tools (`xcode-select --install`).
 
 ```bash
-git clone https://github.com/gabrielmaria/pausa-20-20-20.git
-cd pausa-20-20-20
+git clone https://github.com/gabrielmaria/pisca-pisca.git
+cd pisca-pisca
 ./build.sh --install
 ```
 
-The app is installed to `/Applications/Pausa 20-20-20.app` and launched right away.
+The app is installed to `/Applications/Pisca Pisca.app` and launched right away.
 
 ## Project layout
 
