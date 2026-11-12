@@ -22,7 +22,7 @@ cd pisca-pisca
 ./build.sh --install
 ```
 
-A app fica em `/Applications/Pisca Pisca.app` e arranca de imediato.
+A app fica em `/Applications/PiscaPisca.app` (aparece como **Pisca Pisca** no sistema) e arranca de imediato.
 
 ## Utilizar
 
@@ -64,7 +64,7 @@ cd pisca-pisca
 ./build.sh --install
 ```
 
-The app is installed to `/Applications/Pisca Pisca.app` and launched right away.
+The app is installed to `/Applications/PiscaPisca.app` (shown as **Pisca Pisca**) and launched right away.
 
 ## Project layout
 

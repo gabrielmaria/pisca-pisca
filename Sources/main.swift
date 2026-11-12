@@ -45,10 +45,6 @@ enum Pref {
         get { d.bool(forKey: "didSetup") }
         set { d.set(newValue, forKey: "didSetup") }
     }
-    static var didRename: Bool {
-        get { d.bool(forKey: "didRename") }
-        set { d.set(newValue, forKey: "didRename") }
-    }
 }
 
 // MARK: - Vista da pausa (clique para saltar)
@@ -87,6 +83,8 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         menu.delegate = self
         statusItem.menu = menu
 
+        migratePreferencesIfNeeded()
+
         // Primeira execução: arranca com o Mac, para os lembretes não se perderem num reinício.
         if !Pref.didSetup {
             Pref.didSetup = true
@@ -94,13 +92,10 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
             applyLoginItem(true)
         }
 
-        // Uma vez, após a mudança de nome: re-regista o arranque automático no novo caminho.
-        if !Pref.didRename {
-            Pref.didRename = true
-            if Pref.launchAtLogin {
-                applyLoginItem(false)
-                applyLoginItem(true)
-            }
+        // Garante que o arranque automático fica registado neste bundle (migração/atualizações).
+        if UserDefaults.standard.object(forKey: "didRegisterV3") == nil {
+            UserDefaults.standard.set(true, forKey: "didRegisterV3")
+            if Pref.launchAtLogin { applyLoginItem(true) }
         }
 
         remaining = TimeInterval(Pref.workMinutes * 60)
@@ -116,6 +111,19 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         ws.addObserver(self, selector: #selector(systemDidWake), name: NSWorkspace.screensDidWakeNotification, object: nil)
 
         updateStatusItem()
+    }
+
+    /// Migra as preferências do identificador antigo (local.pausa2020) uma única vez.
+    private func migratePreferencesIfNeeded() {
+        let d = UserDefaults.standard
+        guard d.object(forKey: "migratedToPisca") == nil else { return }
+        if let old = UserDefaults(suiteName: "local.pausa2020") {
+            for key in ["workMinutes", "breakSeconds", "fullScreenBreak",
+                        "launchAtLogin", "didSetup", "language"] {
+                if let v = old.object(forKey: key) { d.set(v, forKey: key) }
+            }
+        }
+        d.set(true, forKey: "migratedToPisca")
     }
 
     func applicationWillTerminate(_ notification: Notification) {

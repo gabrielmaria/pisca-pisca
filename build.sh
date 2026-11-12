@@ -2,13 +2,13 @@
 #
 # Compila o Pisca Pisca e, opcionalmente, instala-o em /Applications.
 #
-#   ./build.sh            -> cria build/Pisca Pisca.app
+#   ./build.sh            -> cria build/PiscaPisca.app
 #   ./build.sh --install  -> compila e instala em /Applications
 #
 set -euo pipefail
 cd "$(dirname "$0")"
 
-APP_NAME="Pisca Pisca"
+APP_NAME="PiscaPisca"
 BUNDLE="build/${APP_NAME}.app"
 
 rm -rf "$BUNDLE"
