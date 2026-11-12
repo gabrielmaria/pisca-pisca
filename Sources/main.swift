@@ -228,10 +228,10 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         let f = DateFormatter()
         f.dateFormat = "HH:mm"
         button.toolTip = phase == .rest && !paused
-            ? Lang.t("A descansar os olhos — \(Int(ceil(remaining))) s",
-                     "Resting your eyes — \(Int(ceil(remaining))) s")
-            : Lang.t("Pisca Pisca — próxima pausa às \(f.string(from: next))",
-                     "Pisca Pisca — next break at \(f.string(from: next))")
+            ? Lang.t("A descansar os olhos: \(Int(ceil(remaining))) s",
+                     "Resting your eyes: \(Int(ceil(remaining))) s")
+            : Lang.t("Pisca Pisca: próxima pausa às \(f.string(from: next))",
+                     "Pisca Pisca: next break at \(f.string(from: next))")
     }
 
     // MARK: Menu

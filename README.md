@@ -4,10 +4,10 @@
 
 App de barra de menus para macOS que aplica a regra **20-20-20**: a cada 20 minutos de ecrã, olhar durante 20 segundos para algo a cerca de 6 metros (20 pés). O nome é o que fazes com os olhos enquanto descansas a vista.
 
-- Nativa em Swift + AppKit — **~0,7 MB** de disco e **~15 MB** de memória (nada de Electron)
+- Nativa em Swift + AppKit: **~0,7 MB** de disco e **~15 MB** de memória (nada de Electron)
 - Vive apenas na barra de menus, sem ícone no Dock
 - Contagem decrescente no ícone e ecrã de pausa a preencher o monitor (ou cartão discreto no canto)
-- Pausa em ecrã inteiro ou modo discreto, tempos configuráveis (10–60 min / 20–60 s)
+- Pausa em ecrã inteiro ou modo discreto, tempos configuráveis (10-60 min / 20-60 s)
 - Interface em **português e inglês**, com seletor no menu
 - Arranque automático com o Mac
 - Sem ficheiros no disco: as preferências ficam apenas em `UserDefaults`
@@ -46,10 +46,10 @@ Durante uma pausa, clique em qualquer lugar para a terminar mais cedo.
 
 A macOS menu bar app that enforces the **20-20-20 rule**: every 20 minutes of screen time, look at something about 6 metres (20 feet) away for 20 seconds.
 
-- Native Swift + AppKit — **~0.7 MB** on disk and **~15 MB** of RAM (no Electron)
+- Native Swift + AppKit: **~0.7 MB** on disk and **~15 MB** of RAM (no Electron)
 - Menu bar only, no Dock icon
 - Countdown in the menu bar and a full-screen break, or a discreet corner card
-- Configurable timings (10–60 min / 20–60 s)
+- Configurable timings (10-60 min / 20-60 s)
 - **English and Portuguese** UI, switchable from the menu
 - Launches at login
 - No files on disk: preferences live in `UserDefaults` only
