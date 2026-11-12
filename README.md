@@ -72,6 +72,7 @@ The app is installed to `/Applications/Pausa 20-20-20.app` and launched right aw
 Sources/main.swift     app source (AppKit, no dependencies)
 Resources/Info.plist   bundle metadata (LSUIElement = true)
 Resources/AppIcon.icns app icon
-tools/makeicon.swift   regenerates the icon (renders icon1024.png)
+tools/makeicon.swift   regenerates the icon: swiftc -O -o makeicon tools/makeicon.swift
+                       ./makeicon icon.png [mono|green]
 build.sh               builds and optionally installs the app
 ```

@@ -1,32 +1,38 @@
 import AppKit
 
+// Uso: ./makeicon <output.png> [mono|green]
+let outPath = CommandLine.arguments[1]
+let mode = CommandLine.arguments.count > 2 ? CommandLine.arguments[2] : "mono"
+
 let size = 1024
 let img = NSImage(size: NSSize(width: size, height: size))
 img.lockFocus()
 
-// Fundo: squircle escuro com gradiente
+// Fundo branco (squircle) com sombra muito subtil
 let inset: CGFloat = 54
 let rect = NSRect(x: inset, y: inset, width: CGFloat(size) - inset * 2, height: CGFloat(size) - inset * 2)
 let squircle = NSBezierPath(roundedRect: rect, xRadius: 220, yRadius: 220)
-NSGradient(colors: [NSColor(srgbRed: 0.17, green: 0.20, blue: 0.19, alpha: 1),
-                    NSColor(srgbRed: 0.05, green: 0.06, blue: 0.06, alpha: 1)])!
+
+let shadow = NSShadow()
+shadow.shadowColor = NSColor.black.withAlphaComponent(0.16)
+shadow.shadowBlurRadius = 30
+shadow.shadowOffset = NSSize(width: 0, height: -8)
+shadow.set()
+NSGradient(colors: [NSColor(srgbRed: 1.0, green: 1.0, blue: 1.0, alpha: 1),
+                    NSColor(srgbRed: 0.955, green: 0.957, blue: 0.958, alpha: 1)])!
     .draw(in: squircle, angle: -90)
 
-// Brilho verde suave atrás do olho
-// Traço de luz no topo do squircle
-let sheen = NSBezierPath()
-sheen.move(to: NSPoint(x: 200, y: 940))
-sheen.curve(to: NSPoint(x: 824, y: 940),
-            controlPoint1: NSPoint(x: 340, y: 985),
-            controlPoint2: NSPoint(x: 684, y: 985))
-sheen.lineWidth = 6
-sheen.lineCapStyle = .round
-NSColor(calibratedWhite: 1, alpha: 0.10).setStroke()
-sheen.stroke()
+// Contorno fino para o ícone não se perder num fundo branco
+NSGraphicsContext.saveGraphicsState()
+let border = NSBezierPath(roundedRect: rect.insetBy(dx: 1.5, dy: 1.5), xRadius: 218, yRadius: 218)
+border.lineWidth = 3
+NSColor(calibratedWhite: 0, alpha: 0.06).setStroke()
+border.stroke()
+NSGraphicsContext.restoreGraphicsState()
 
-// Contorno do olho
-let cx: CGFloat = 512, cy: CGFloat = 600
-let w: CGFloat = 500, h: CGFloat = 260
+// Olho minimalista
+let cx: CGFloat = 512, cy: CGFloat = 548
+let w: CGFloat = 520, h: CGFloat = 250
 let eye = NSBezierPath()
 eye.move(to: NSPoint(x: cx - w / 2, y: cy))
 eye.curve(to: NSPoint(x: cx, y: cy + h / 2),
@@ -42,45 +48,32 @@ eye.curve(to: NSPoint(x: cx - w / 2, y: cy),
           controlPoint1: NSPoint(x: cx - w / 7, y: cy - h / 2),
           controlPoint2: NSPoint(x: cx - w / 3.2, y: cy - h / 2.15))
 eye.close()
-eye.lineWidth = 30
+eye.lineWidth = 24
 eye.lineCapStyle = .round
 eye.lineJoinStyle = .round
-NSColor(srgbRed: 0.96, green: 0.98, blue: 0.97, alpha: 1).setStroke()
+NSColor(srgbRed: 0.07, green: 0.08, blue: 0.08, alpha: 1).setStroke()
 eye.stroke()
 
-// Íris
-let iris = NSBezierPath(ovalIn: NSRect(x: cx - 104, y: cy - 104, width: 208, height: 208))
-NSGradient(colors: [NSColor(srgbRed: 0.47, green: 0.96, blue: 0.76, alpha: 1),
-                    NSColor(srgbRed: 0.05, green: 0.66, blue: 0.50, alpha: 1)])!
-    .draw(in: iris, angle: -90)
+if mode == "green" {
+    // Íris verde discreta + pupila
+    let iris = NSBezierPath(ovalIn: NSRect(x: cx - 96, y: cy - 96, width: 192, height: 192))
+    NSColor(srgbRed: 0.09, green: 0.64, blue: 0.42, alpha: 1).setFill()
+    iris.fill()
 
-// Pupila
-let pupil = NSBezierPath(ovalIn: NSRect(x: cx - 46, y: cy - 46, width: 92, height: 92))
-NSColor(srgbRed: 0.02, green: 0.08, blue: 0.06, alpha: 1).setFill()
-pupil.fill()
-
-// Reflexo
-let shine = NSBezierPath(ovalIn: NSRect(x: cx - 62, y: cy + 18, width: 34, height: 34))
-NSColor(calibratedWhite: 1, alpha: 0.8).setFill()
-shine.fill()
-
-// Texto 20 · 20 · 20
-let base = NSFont.systemFont(ofSize: 88, weight: .semibold)
-let desc = base.fontDescriptor.withDesign(.rounded) ?? base.fontDescriptor
-let font = NSFont(descriptor: desc, size: 88) ?? base
-let attrs: [NSAttributedString.Key: Any] = [
-    .font: font,
-    .foregroundColor: NSColor(calibratedWhite: 1, alpha: 0.88),
-    .kern: 9
-]
-let text = NSAttributedString(string: "20 · 20 · 20", attributes: attrs)
-let tsize = text.size()
-text.draw(at: NSPoint(x: (CGFloat(size) - tsize.width) / 2, y: 210))
+    let pupil = NSBezierPath(ovalIn: NSRect(x: cx - 44, y: cy - 44, width: 88, height: 88))
+    NSColor(srgbRed: 0.05, green: 0.06, blue: 0.06, alpha: 1).setFill()
+    pupil.fill()
+} else {
+    // Monocromático: apenas uma pupila sólida
+    let pupil = NSBezierPath(ovalIn: NSRect(x: cx - 88, y: cy - 88, width: 176, height: 176))
+    NSColor(srgbRed: 0.07, green: 0.08, blue: 0.08, alpha: 1).setFill()
+    pupil.fill()
+}
 
 img.unlockFocus()
 
 let rep = NSBitmapImageRep(data: img.tiffRepresentation!)!
 rep.size = NSSize(width: size, height: size)
 let png = rep.representation(using: .png, properties: [:])!
-try png.write(to: URL(fileURLWithPath: CommandLine.arguments[1]))
+try png.write(to: URL(fileURLWithPath: outPath))
 print("ok")
